@@ -2,4 +2,6 @@
 
 These are the configuration files for the i3 window manager which I use on my Surface Pro 3.
 
-Screenshot showcasing the i3bar here: http://imgur.com/e1pbRQI
+The "i3" directory contains the configuration file for i3 itself (hotkeys, startup tasks etc.) while the "i3status" directory contains the configuration file for the i3status bar.
+
+Screenshot showcasing the i3status bar here: http://imgur.com/e1pbRQI
