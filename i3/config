@@ -4,6 +4,40 @@
 
 set $mod Mod4
 
+# -----ADDITIONAL STUFF BY MICHAEL-----
+#Sets Wallpaper
+exec --no-startup-id nitrogen --restore
+
+# Starts FB messenger on workspace 2
+exec --no-startup-id i3-msg 'workspace 2; exec messengerfordesktop'
+
+# Starts wicd-client on workspace 9
+exec --no-startup-id i3-msg 'workspace 9; exec wicd-client'
+
+# Binds lockscreen key
+# "lock" is a script which takes a screenshot of the current workspace and invokes 
+# i3 lock with a gaussian blur applied to it, more details here: 
+# http://plankenau.com/blog/post-10/gaussianlock
+bindsym $mod+o exec lock
+
+# Binds printscreen key (mod+Delete as the type cover has no print screen)
+# I use spectacle as my screen capture tool of choice
+bindsym $mod+Delete exec spectacle
+
+# Binds chrome browser
+bindsym $mod+c exec google-chrome-stable
+
+# Pulse Audio controls
+bindsym $mod+F6 exec --no-startup-id pactl set-sink-volume 0 +10% # increase sound
+bindsym $mod+F5 exec --no-startup-id pactl set-sink-volume 0 -10% # decrease sound
+bindsym $mod+F3 exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
+
+# Sreen brightness controls
+bindsym $mod+F1 exec xbacklight -dec 20 # decrease screen brightness
+bindsym $mod+F2 exec xbacklight -inc 20 # increase screen brightness
+
+# -----END MICHAEL'S STUFF-----
+
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 font pango:monospace 14
@@ -34,40 +68,6 @@ bindsym $mod+d exec dmenu_run
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
-
-# -----ADDITIONAL STUFF BY MICHAEL-----
-#Sets Wallpaper
-exec --no-startup-id nitrogen --restore
-
-# Starts FB messenger on workspace 2
-exec --no-startup-id i3-msg 'workspace 2; exec messengerfordesktop'
-
-# Starts wicd-client on workspace 9
-exec --no-startup-id i3-msg 'workspace 9; exec wicd-client'
-
-# Binds lockscreen key
-# "lock" is a script which takes a screenshot of the current workspace and invokes 
-# i3 lock with a gaussian blur applied to it, more details here: 
-# http://plankenau.com/blog/post-10/gaussianlock
-bindsym $mod+o exec lock
-
-# Binds printscreen key (mod+Delete as the type cover has no print screen)
-# I use spectacle as my screen capture tool of choice
-bindsym $mod+Delete exec spectacle
-
-# Binds chrome browser
-bindsym $mod+c exec google-chrome-stable
-
-# Pulse Audio controls
-bindsym $mod+F6 exec --no-startup-id pactl set-sink-volume 1 +10% # increase sound
-bindsym $mod+F5 exec --no-startup-id pactl set-sink-volume 1 -10% # decrease sound
-bindsym $mod+F3 exec --no-startup-id pactl set-sink-mute 1 toggle # mute sound
-
-# Sreen brightness controls
-bindsym $mod+F1 exec xbacklight -dec 20 # decrease screen brightness
-bindsym $mod+F2 exec xbacklight -inc 20 # increase screen brightness
-
-# -----END MICHAEL'S STUFF-----
 
 # change focus
 bindsym $mod+j focus left
