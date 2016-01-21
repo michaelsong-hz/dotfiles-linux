@@ -6,7 +6,7 @@
 set $mod Mod4
 
 # -----ADDITIONAL STUFF BY MICHAEL-----
-#Sets Wallpaper
+# Sets Wallpaper using nitrogen
 exec --no-startup-id nitrogen --restore
 
 # Starts FB messenger on workspace 2
