@@ -2,6 +2,7 @@
 #
 # Modified by Michael Song
 
+# Sets the mod key to the windows key
 set $mod Mod4
 
 # -----ADDITIONAL STUFF BY MICHAEL-----
