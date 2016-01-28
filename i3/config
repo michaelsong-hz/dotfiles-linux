@@ -9,6 +9,9 @@ set $mod Mod4
 # Sets Wallpaper using nitrogen
 exec --no-startup-id nitrogen --restore
 
+# Forces sound to be muted
+exec --no-startup-id pactl set-sink-mute 0 1
+
 # Executes startup programs
 exec startup_programs.sh
 
