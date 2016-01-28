@@ -9,11 +9,8 @@ set $mod Mod4
 # Sets Wallpaper using nitrogen
 exec --no-startup-id nitrogen --restore
 
-# Starts FB messenger on workspace 2
-exec --no-startup-id i3-msg 'workspace 2; exec messengerfordesktop'
-
-# Starts wicd-client on workspace 9
-exec --no-startup-id i3-msg 'workspace 9; exec wicd-client'
+# Executes startup programs
+exec startup_programs.sh
 
 # Binds lockscreen key
 # "lock" is a script which takes a screenshot of the current workspace and invokes 
