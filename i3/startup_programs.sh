@@ -3,6 +3,7 @@
 # Simple autostart file for i3-wm, executed from i3 config
 
 # Starts wicd-client on workspace 10
+sleep 1
 i3-msg "workspace 10; exec wicd-client"
 
 # Starts FB messenger on workspace 2
