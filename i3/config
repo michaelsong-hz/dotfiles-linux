@@ -19,7 +19,7 @@ exec $HOME/.config/i3/startup_programs.sh
 # "lock" is a script which takes a screenshot of the current workspace and invokes 
 # i3 lock with a gaussian blur applied to it, more details here: 
 # http://plankenau.com/blog/post-10/gaussianlock
-bindsym $mod+o exec $HOME/.config/i3/lock
+bindsym $mod+o exec $HOME/.config/i3/lock.sh
 
 # Binds printscreen key (mod+Delete as the type cover has no print screen)
 # I use spectacle as my screen capture tool of choice
