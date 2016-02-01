@@ -13,7 +13,7 @@ exec --no-startup-id nitrogen --restore
 exec --no-startup-id pactl set-sink-mute 0 1
 
 # Executes startup programs
-exec startup_programs.sh
+exec $HOME/.config/i3/startup_programs.sh
 
 # Binds lockscreen key
 # "lock" is a script which takes a screenshot of the current workspace and invokes 
