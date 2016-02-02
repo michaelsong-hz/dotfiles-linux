@@ -8,7 +8,6 @@ general {
 
 order += "cpu_usage"
 order += "cpu_temperature 0"
-order += "disk /"
 order += "wireless _first_"
 order += "battery 0"
 order += "volume master"
@@ -25,10 +24,6 @@ battery 0 {
 
 tztime local {
         format = " It is %A %m-%d-%Y at %H:%M %Z "
-}
-
-disk "/" {
-        format = " %avail free "
 }
 
 cpu_temperature 0 {
