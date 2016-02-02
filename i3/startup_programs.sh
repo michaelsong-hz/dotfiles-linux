@@ -2,6 +2,8 @@
 
 # Simple autostart file for i3-wm, executed from i3 config
 
+notify-send -t 3000 -u normal "Executing startup programs..."
+
 # Starts wicd-client on workspace 10
 sleep 1
 i3-msg "workspace 10; exec wicd-client"
@@ -12,5 +14,6 @@ i3-msg "workspace 2; exec messengerfordesktop"
 # Switches back to workspace 1 after waiting for fb messenger to start
 sleep 2
 i3-msg "workspace 1"
+notify-send -t 3000 -u low "Desktop Ready"
 
 exit 0

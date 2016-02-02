@@ -9,6 +9,9 @@ set $mod Mod4
 # Sets the screen dpi (125%)
 exec $HOME/.config/i3/set_dpi.sh
 
+# Starts notification manager
+exec --no-startup-id dunst -config $HOME/.config/i3/dunstrc
+
 # Sets Wallpaper using nitrogen
 exec --no-startup-id nitrogen --restore
 
