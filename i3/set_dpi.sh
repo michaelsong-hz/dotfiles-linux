@@ -5,5 +5,3 @@
 # Sets DPI to 150%
 xrandr --dpi 144
 i3-msg "restart"
-
-exit 0
