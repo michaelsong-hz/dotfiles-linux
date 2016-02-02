@@ -8,10 +8,10 @@ notify-send -t 3000 -u normal "Executing startup programs..."
 sleep 1
 i3-msg --no-startup-id "workspace 10; exec wicd-client"
 
-# Starts FB messenger on workspace 2
-i3-msg --no-startup-id "workspace 2; exec messengerfordesktop"
+# Starts Evolution mail client on workspace 3
+i3-msg --no-startup-id "workspace 3; exec evolution"
 
-# Switches back to workspace 1 after waiting for fb messenger to start
+# Switches back to workspace 1 after waiting for evolution to start
 sleep 2
 i3-msg --no-startup-id "workspace 1"
 
