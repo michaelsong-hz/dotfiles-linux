@@ -66,8 +66,8 @@ font pango:monospace 12
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-# start a terminal (I use terminator as my emulator of choice)
-bindsym $mod+Return exec terminator
+# start a terminal
+bindsym $mod+Return exec xfce4-terminal
 
 # kill focused window
 bindsym $mod+Shift+q kill

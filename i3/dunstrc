@@ -119,3 +119,9 @@
 [test]
     summary = "*test*"
     background="#22dd22"
+
+[messengerfordesktop]
+    appname = messengerfordesktop
+    timeout = 0
+    background = "#99FF33"
+    foreground = "#000000"
