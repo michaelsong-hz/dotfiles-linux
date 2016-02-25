@@ -6,8 +6,11 @@
 set $mod Mod4
 
 # -----ADDITIONAL STUFF BY MICHAEL-----
-#Removes title bars
+# Removes title bars
 new_window 1pixel
+
+# Starts composite manager
+exec --no-startup-id compton 
 
 # Sets the screen dpi (125%)
 exec --no-startup-id $HOME/.config/i3/set_dpi.sh
@@ -20,9 +23,6 @@ exec --no-startup-id nitrogen --restore
 
 # Forces sound to be muted
 exec --no-startup-id pactl set-sink-mute 0 1
-
-# Executes startup programs
-exec --no-startup-id $HOME/.config/i3/startup_programs.sh
 
 # Binds lockscreen key
 # "lock" is a script which takes a screenshot of the current workspace and invokes 
