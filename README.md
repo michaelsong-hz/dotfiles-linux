@@ -6,4 +6,4 @@ The "i3" directory contains the configuration file for i3 itself (hotkeys, start
 
 Screenshot showcasing the i3status bar here: 
 
-![picture](http://i.imgur.com/tIaSiks.jpg)
+![picture](http://i.imgur.com/imoVSes.jpg)
