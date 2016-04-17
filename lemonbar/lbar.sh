@@ -1,18 +1,15 @@
 #!/bin/bash
 
-# Colours, Icons and Separators {{{
 # Colours
 . ~/.config/lemonbar/lbar_colours
 
 # Icons
-IUpTime=""
 INet=""
-IMem=""
 ICpuTemp=""
 ICpuLoad=""
-IVolS=""
-IVolM=""
-IVolL=""
+IVolM=""
+IVolL=""
+IVolH=""
 IBattery0=""
 IBattery1=""
 IBattery2=""
@@ -21,12 +18,6 @@ IBattery4=""
 IDate=""
 ITime=""
 ILock=""
-IBrightness=""
-
-# Workspace Icons
-IWorkspaceFocused=""
-IWorkspaceUnfocused=""
-IWorkspaceEmpty=""
 IWorkspaceDivider="|"
 
 # Separators
@@ -34,15 +25,9 @@ SEP=" "
 SEP2="  "
 SEP4="    "
 SEP6="      "
-# }}}
 
-# Other stuff
+# Refresh rate
 refresh=0.5
-
-# Create temp files
-# mkdir -p /tmp/.lemonbarscripts
-# echo "false" >/tmp/.lemonbarscripts/cputnotif
-# echo "false" >/tmp/.lemonbarscripts/batterynotif
 
 # Names of all the screen outputs being used
 Screens=$(xrandr | grep -o "^.* connected" | sed "s/ connected//")
@@ -84,17 +69,6 @@ bar() {
         else echo ""; fi
     } 
 
-    # Approved
-    Brightness() {
-        BRIGHTNESS=$(xbacklight -get | grep -o "[0-9]\+\.[0-9]\?")
-        if [[ $BRIGHTNESS != "" ]]; then
-            BRIGHTNESS+="%"
-            echo %{F$gray}$IBrightness$SEP$BRIGHTNESS%{F-}
-        else
-            echo ""
-        fi
-    }
-
     CpuTemp() {
         # Get the the highest temp of any core
         CPUTEMP=$(sensors | grep "Physical id" | grep -o "[0-9]\+\.[0-9]\+" | head -n 1 | sed "s/\..*$//")
@@ -109,93 +83,49 @@ bar() {
         fi
     }
 
-    # Approved
     Date() {
         DATE=$(date "+%A %m/%d/%Y")
         echo %{F$gray}$IDate$SEP$DATE%{F-}
     }
 
-    # Approved
-    Memory() {
-        MEMUSED=$(free -m | awk 'NR==2 {print $3}')
-        MEMUSED+="MB"
-        echo %{F$gray}$IMem$SEP$MEMUSED%{F-}
-    }
-
-    # Ok
     NetUp() {	
         # Pings the default gateway. If it is successful then we are connected. Benefits
         # to pinging the default gateway rather than google.com, etc. is that this doesn't
         # rely on those websites being up and as such, will always be accurate
         defGate=$(ip r | grep default | cut -d ' ' -f 3)
-        # 7 is the minimum length for a valid ip address (ex. 1.1.1.1)
-        # Really just used to make sure we obtained a valid ip from 'ip r'
         if [[ ${#defGate} -ge 7 ]]; then
             NetUp=$(ping -q -w 1 -c 1 $defGate > /dev/null && echo c || echo u)
             # If some network interface is up
             if [[ $NetUp == "c" ]]; then
                 echo %{F$gray}$INet%{F-}
             else
+                # Icon background is red if network is down
                 echo "%{F$gray}%{B$red}$INet%{B$bg}%{F-}"
             fi
         else
+            # Icon background is red if network is down
             echo "%{F$gray}%{B$red}$INet%{B$bg}%{F-}"
         fi
     }
 
-    # Approved
     Time() {
         TIME=$(date "+%H:%M %Z")
         echo %{F$gray}$ITime$SEP$TIME%{F-}
     }
 
-    # Approved
-    UpTime() {
-        UPTIME=$(uptime -p)
-        Min=$(echo $UPTIME | grep -o "[0-9]\+ min" | grep -o "[0-9]\+")
-        Hour=$(echo $UPTIME | grep -o "[0-9]\+ hour" | grep -o "[0-9]\+")
-        Day=$(echo $UPTIME | grep -o "[0-9]\+ day" | grep -o "[0-9]\+")
-
-        # Format minutes so that it always occupies 2 characters
-        while [[ ${#Min} -lt 2 ]]; do 
-            Min="0$Min"
-        done 
-        # Same for hours but, so that it always occupies at least 1 character
-        while [[ ${#Hour} -lt 1 ]]; do 
-            Hour="0$Hour"
-        done 
-        if [[ ${#Day} -ge 1 ]]; then
-            Day="$Day "
-        fi
-
-        out="$Day$Hour:$Min"
-
-        echo %{F$gray}$IUpTime$SEP$out%{F-}
-    }
-
-    # Okay
     Volume() {
-        # Crap I still have to work on >:/// {{{
-        # OUT=$(amixer -c 0 | grep -o "Invalid card number.")
-        # Card was found
-        # if [[ $OUT == "" ]];
-        # then
-        # Check to see if card is being used
-
-        # Card was not found
-        # else
-
-        # fi
-
-        # This should maybe be changed so that it doesn't serach for Left but rather just a percent
-        # exec amixer -D pulse get Master | grep Left: | grep -o "[0-9]*%" | grep -o "[0-9]*"
-        # }}}
-        VOL=$( (amixer -D pulse get Master | grep Left: | grep -o "[0-9]\+%" | grep -o "[0-9]\+") || echo "")
-        if [[ $VOL -lt 33 ]]; then Icon=$IVolS
-        elif [[ $VOL -le 66 ]]; then Icon=$IVolM
-        else Icon=$IVolL; fi
-
-        VOL+="%"
+        # Check the volume level using the perl script
+        VOL=$($HOME/.config/lemonbar/check_volume.pl 1)
+        # Set icons appropriately
+        # Muted
+        if [[ $VOL == M* ]]; then 
+            Icon=$IVolM
+            VOL+="%)"
+        else
+            if [[ $VOL -lt 40 ]]; then Icon=$IVolL # Low volume
+            else Icon=$IVolH; fi # High volume
+            VOL+="%"
+        fi
 
         # If we actually retrieved a valid volume value
         if [[ ${#VOL} -ge 1 ]]; then
@@ -257,7 +187,6 @@ bar() {
     barcenter="$(Time)"
     barright="$(CpuTemp)$SEP2$(NetUp)$SEP2$(Volume)$SEP2$(Battery)$SEP2$(Date)$SEP2"
 
-    #="%{S0}%{l}$barleft%{c}$barcenter%{r}$barright
     finalbarout=""
 
     tmp=0
@@ -266,8 +195,6 @@ bar() {
         let tmp=$tmp+1
     done
 
-    #echo "%{S0}%{l}$barleft%{c}$barcenter%{r}$barright"
-    #%{S1}%{l}$barleft%{c}$barcenter%{r}$barright"
     echo "${finalbarout}"
 }
 
