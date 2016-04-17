@@ -14,8 +14,8 @@ lbar.sh contains the main configuration files and scripts for lemonbar, and lbar
 
 ## Screenshots
 
-![picture](http://i.imgur.com/uXfjSeu.jpg)
-![picture](http://i.imgur.com/9SqJz5L.jpg)
+![picture](http://i.imgur.com/8VeALmA.jpg)
+![picture](http://i.imgur.com/98LTLsF.jpg)
 
 ## Dependencies
 
