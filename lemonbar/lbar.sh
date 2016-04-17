@@ -225,7 +225,13 @@ bar() {
                     if [ -n "$CURRENTWS" ]; then
                         OUTPUT="$OUTPUT$IWorkspaceDivider$CURRENTWS"
                     fi
-                    CURRENTWS=" ${WORKSPACES:i+1:1} "
+
+                    # Need to add two chars if the workspace is two digits
+                    if [ ${WORKSPACES:i+2:1} != "," ]; then
+                        CURRENTWS=" ${WORKSPACES:i+1:1}${WORKSPACES:i+2:1} "
+                    else
+                        CURRENTWS=" ${WORKSPACES:i+1:1} "
+                    fi
                 fi
                 # Reset our counter when it hits 11
                 if [ $COUNTER -eq 11 ]; then
@@ -238,7 +244,7 @@ bar() {
             fi
         done
 
-        # TODO: Better way to explain this shit
+        # TODO: Better way to explain this
         # If our current workspace still contains something
         if [ -n "$CURRENTWS" ]; then
             OUTPUT="$OUTPUT$IWorkspaceDivider$CURRENTWS"
