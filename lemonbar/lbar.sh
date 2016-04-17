@@ -2,7 +2,7 @@
 
 # Colours, Icons and Separators {{{
 # Colours
-. ~/.config/i3/lbar_colours
+. ~/.config/lemonbar/lbar_colours
 
 # Icons
 IUpTime=""
