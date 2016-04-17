@@ -34,7 +34,6 @@ Screens=$(xrandr | grep -o "^.* connected" | sed "s/ connected//")
 
 bar() {
 
-    # Reading multiple files, many if statements and notifications. Needs work.
     Battery() {
         # If this system has a battery
         if [[ -d /sys/class/power_supply/BAT0 ]] || [[ -d /sys/class/power_supply/BAT1 ]]; then
@@ -62,7 +61,7 @@ bar() {
             BATTERY+="%"
             # If our battery background has changed, print it with the changed background
             if [ -n "$BATbg" ]; then
-                echo "%{F$white}%{B$BATbg} $stat$SEP$BATTERY %{B$bg}%{F-}"
+                echo "%{F$white}%{B$BATbg}$stat$SEP$BATTERY%{B$bg}%{F-}"
             else
                 echo %{F$gray}$stat$SEP$BATTERY%{F-}
             fi
@@ -76,16 +75,16 @@ bar() {
         # Icon turns red if above 65C
         if [[ $CPUTEMP -gt 65 ]]; then
             CPUTEMP+="C"
-            echo "%{F$gray}%{B$red}$ICpuTemp$SEP$CPUTEMP%{B$bg}%{F-}"
+            echo "%{F$gray}%{B$red}%{A:"xfce4-terminal -e top \&":}$ICpuTemp$SEP$CPUTEMP%{A}%{B$bg}%{F-}"
         else
             CPUTEMP+="C"
-            echo %{F$gray}$ICpuTemp$SEP$CPUTEMP%{F-}
+            echo %{F$gray}%{A:"xfce4-terminal -e top &":}$ICpuTemp$SEP$CPUTEMP%{A}%{F-}
         fi
     }
 
     Date() {
         DATE=$(date "+%A %m/%d/%Y")
-        echo %{F$gray}$IDate$SEP$DATE%{F-}
+        echo %{F$gray}%{A:"google-chrome-stable google.com/calendar &":}$IDate$SEP$DATE%{A}%{F-}
     }
 
     NetUp() {	
@@ -97,14 +96,14 @@ bar() {
             NetUp=$(ping -q -w 1 -c 1 $defGate > /dev/null && echo c || echo u)
             # If some network interface is up
             if [[ $NetUp == "c" ]]; then
-                echo %{F$gray}$INet%{F-}
+                echo %{F$gray}%{A:"wicd-client &":}$INet%{A}%{F-}
             else
                 # Icon background is red if network is down
-                echo "%{F$gray}%{B$red}$INet%{B$bg}%{F-}"
+                echo "%{F$gray}%{B$red}%{A:"wicd-client \&":}$INet%{A}%{B$bg}%{F-}"
             fi
         else
             # Icon background is red if network is down
-            echo "%{F$gray}%{B$red}$INet%{B$bg}%{F-}"
+            echo "%{F$gray}%{B$red}%{A:"wicd-client \&":}$INet%{A}%{B$bg}%{F-}"
         fi
     }
 
@@ -129,7 +128,7 @@ bar() {
 
         # If we actually retrieved a valid volume value
         if [[ ${#VOL} -ge 1 ]]; then
-            echo %{F$gray}%{A:urxvt -e "alsamixer -V all &":}$Icon$SEP$VOL%{A}%{F-}
+            echo %{F$gray}%{A:"pavucontrol &":}$Icon$SEP$VOL%{A}%{F-}
         fi
     }
 
