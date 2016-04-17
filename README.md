@@ -1,9 +1,25 @@
 # Configuration files for the i3 window manager
 
-These are the configuration files for the i3 window manager which I use on my Surface Pro 3.
+These are the configuration files for the i3 window manager, along with lemonbar which I use on my Surface Pro 3.
 
-The "i3" directory contains the configuration file for i3 itself (hotkeys, startup tasks etc.), along with scripts, while the "i3status" directory contains the configuration file for the i3status bar.
+## i3
 
-Screenshot showcasing the i3status bar here: 
+The "i3" directory contains the configuration files for i3 itself (hotkeys, startup tasks etc.), along with scripts for startup tasks (set_dpi.sh) and locking the screen (lock.sh). Look for the "config" file for the main configuration.
 
-![picture](http://i.imgur.com/imoVSes.jpg)
+## lemonbar
+
+I'm using [lemonbar-xft](https://github.com/krypt-n/bar) as my status bar for this setup. The lemonbar directory contains configuration files for lemonbar written both by myself and my friend [JSpeedie](https://github.com/JSpeedie/dotfiles).
+
+lbar.sh contains the main configuration files and scripts for lemonbar, and lbar_colours simply contains the colour codes of colours used by lemonbar.
+
+## Screenshots
+
+![picture](http://i.imgur.com/uXfjSeu.jpg)
+![picture](http://i.imgur.com/9SqJz5L.jpg)
+
+## Dependencies
+
+* [i3-wm](https://i3wm.org/)
+* [lemonbar-xft](https://github.com/krypt-n/bar)
+* [Font-Awesome](https://fortawesome.github.io/Font-Awesome/) (Used for icons in lemonbar)
+* [lm-sensors](http://www.linuxfromscratch.org/blfs/view/svn/general/lm_sensors.html) (Required to get temperature info for lemonbar)
