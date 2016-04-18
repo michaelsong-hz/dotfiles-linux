@@ -75,10 +75,10 @@ bar() {
         # Icon turns red if above 65C
         if [[ $CPUTEMP -gt 65 ]]; then
             CPUTEMP+="C"
-            echo "%{F$gray}%{B$red}%{A:"xfce4-terminal -e top \&":}$ICpuTemp$SEP$CPUTEMP%{A}%{B$bg}%{F-}"
+            echo "%{F$gray}%{B$red}%{A:"xfce4-terminal -e top -T Top \&":}$ICpuTemp$SEP$CPUTEMP%{A}%{B$bg}%{F-}"
         else
             CPUTEMP+="C"
-            echo %{F$gray}%{A:"xfce4-terminal -e top &":}$ICpuTemp$SEP$CPUTEMP%{A}%{F-}
+            echo %{F$gray}%{A:"xfce4-terminal -e top -T Top &":}$ICpuTemp$SEP$CPUTEMP%{A}%{F-}
         fi
     }
 
@@ -174,9 +174,10 @@ bar() {
                 if [ ${#ACTIVEW} -gt 42 ]; then
                     ACTIVEW="$(echo $ACTIVEW | cut -c 1-40)..."
                 fi
-                # If it's blank, get rid of the space
-                if [ $ACTIVEW == " " ]; then ACTIVEW=""; fi
-                # Mark it as active and change its background colour
+                # Add a space to separate the title from the window number
+                if [ ${#ACTIVEW} -gt 0 ]; then
+                    ACTIVEW=" $ACTIVEW"
+                fi
                 CURRENTWS="%{B#607D8B}[$CURRENTWS]$ACTIVEW%{B$bg}"
             fi
         done
