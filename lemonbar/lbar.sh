@@ -182,7 +182,7 @@ bar() {
         echo "%{F$gray}$OUTPUT$IWorkspaceDivider%{F-}"
     }
 
-    barleft="$(Workspaces)"
+    barleft="$SEP$(Workspaces)"
     barcenter="$(Time)"
     barright="$(CpuTemp)$SEP2$(NetUp)$SEP2$(Volume)$SEP2$(Battery)$SEP2$(Date)$SEP2"
 
