@@ -81,8 +81,8 @@ bindsym $mod+Return exec xfce4-terminal
 # kill focused window
 bindsym $mod+Shift+q kill
 
-# start dmenu (a program launcher)
-bindsym $mod+d exec dmenu_run -q -i -t -h 35 -fn "Roboto 11" -nb "#002B36"
+# start rofi (a program launcher)
+bindsym $mod+d exec rofi -show run -location 2 -font "Roboto 17" -fg "#C6C9CA" -bg "#002B36" -hlbg "#607D8B"
 
 # change focus
 bindsym $mod+j focus left
