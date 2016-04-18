@@ -152,14 +152,14 @@ bar() {
                 if [ $COUNTER -eq 1 ]; then
                     j=$[$i +1]
                     if [ -n "$CURRENTWS" ]; then
-                        OUTPUT="$OUTPUT$IWorkspaceDivider$CURRENTWS"
+                        OUTPUT="$OUTPUT$IWorkspaceDivider $CURRENTWS "
                     fi
 
                     # Need to add two chars if the workspace is two digits
                     if [ ${WORKSPACES:i+2:1} != "," ]; then
-                        CURRENTWS=" ${WORKSPACES:i+1:1}${WORKSPACES:i+2:1} "
+                        CURRENTWS="${WORKSPACES:i+1:1}${WORKSPACES:i+2:1}"
                     else
-                        CURRENTWS=" ${WORKSPACES:i+1:1} "
+                        CURRENTWS="${WORKSPACES:i+1:1}"
                     fi
                 fi
                 # Reset our counter when it hits 11
@@ -168,15 +168,23 @@ bar() {
                 fi
                 # Check if the current workspace is active in the JSON object
             elif [ $ch == "d" ] && [ ${WORKSPACES:i+3:1} == "t" ]; then
-                # If so, mark it as active and change its background colour
-                CURRENTWS="%{B#607D8B}$CURRENTWS%{B$bg}"
+                # If so, get the name of the active window
+                ACTIVEW="$($HOME/.config/lemonbar/get_title.sh)"
+                # Cut off the window title if it's >42 characters long
+                if [ ${#ACTIVEW} -gt 42 ]; then
+                    ACTIVEW="$(echo $ACTIVEW | cut -c 1-40)..."
+                fi
+                # If it's blank, get rid of the space
+                if [ $ACTIVEW == " " ]; then ACTIVEW=""; fi
+                # Mark it as active and change its background colour
+                CURRENTWS="%{B#607D8B}[$CURRENTWS]$ACTIVEW%{B$bg}"
             fi
         done
 
         # TODO: Better way to explain this
         # If our current workspace still contains something
         if [ -n "$CURRENTWS" ]; then
-            OUTPUT="$OUTPUT$IWorkspaceDivider$CURRENTWS"
+            OUTPUT="$OUTPUT$IWorkspaceDivider $CURRENTWS "
         fi
 
         echo "%{F$gray}$OUTPUT$IWorkspaceDivider%{F-}"
