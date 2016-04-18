@@ -169,7 +169,7 @@ bar() {
                 # Check if the current workspace is active in the JSON object
             elif [ $ch == "d" ] && [ ${WORKSPACES:i+3:1} == "t" ]; then
                 # If so, mark it as active and change its background colour
-                CURRENTWS="%{B#467986}$CURRENTWS%{B$bg}"
+                CURRENTWS="%{B#607D8B}$CURRENTWS%{B$bg}"
             fi
         done
 
