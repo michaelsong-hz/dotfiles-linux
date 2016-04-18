@@ -169,7 +169,8 @@ bar() {
                 # Check if the current workspace is active in the JSON object
             elif [ $ch == "d" ] && [ ${WORKSPACES:i+3:1} == "t" ]; then
                 # If so, get the name of the active window
-                ACTIVEW="$($HOME/.config/lemonbar/get_title.sh)"
+                id=$(xprop -root | awk '/_NET_ACTIVE_WINDOW\(WINDOW\)/{print $NF}')
+                ACTIVEW=$(xprop -id $id | awk '/_NET_WM_NAME/{$1=$2="";print}' | cut -d'"' -f2)
                 # Cut off the window title if it's >42 characters long
                 if [ ${#ACTIVEW} -gt 42 ]; then
                     ACTIVEW="$(echo $ACTIVEW | cut -c 1-40)..."
