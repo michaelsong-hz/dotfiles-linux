@@ -210,4 +210,4 @@ fi
 while true; do
     echo "$(bar)"
     sleep $refresh;
-done | lemonbar -g x35 -a 22 -u 2 -o $OH -f "Roboto-13" -o $OF -f "FontAwesome-11" -B $bg -F $fg | bash &
+done | lemonbar -g x33 -a 22 -u 2 -o $OH -f "Roboto-13" -o $OF -f "FontAwesome-11" -B $bg -F $fg | bash &
