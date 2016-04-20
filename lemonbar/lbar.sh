@@ -75,6 +75,7 @@ bar() {
         # Icon turns red if above 65C
         if [[ $CPUTEMP -gt 65 ]]; then
             CPUTEMP+="C"
+            # Opens xfce-4 terminal with the top command executed on click
             echo "%{F$gray}%{B$red}%{A:"xfce4-terminal -e top -T Top \&":}$ICpuTemp$SEP$CPUTEMP%{A}%{B$bg}%{F-}"
         else
             CPUTEMP+="C"
@@ -84,6 +85,7 @@ bar() {
 
     Date() {
         DATE=$(date "+%A %m/%d/%Y")
+        # Launches google cal in chrome when clicked
         echo %{F$gray}%{A:"google-chrome-stable google.com/calendar &":}$IDate$SEP$DATE%{A}%{F-}
     }
 
@@ -96,6 +98,7 @@ bar() {
             NetUp=$(ping -q -w 1 -c 1 $defGate > /dev/null && echo c || echo u)
             # If some network interface is up
             if [[ $NetUp == "c" ]]; then
+                # Opens wicd-client when clicked
                 echo %{F$gray}%{A:"wicd-client &":}$INet%{A}%{F-}
             else
                 # Icon background is red if network is down
@@ -128,11 +131,12 @@ bar() {
 
         # If we actually retrieved a valid volume value
         if [[ ${#VOL} -ge 1 ]]; then
+            # Clicking on the volume icon launches an audio control interface
             echo %{F$gray}%{A:"pavucontrol &":}$Icon$SEP$VOL%{A}%{F-}
         fi
     }
 
-    # This is currently extremely inefficient, look to optimize this in the future
+    # Extremely messy and inefficient, need to clean this up
     Workspaces() {
         # This command returns all the workspaces in use in a JSON format
         WORKSPACES="$(i3-msg -t get_workspaces)"
@@ -146,20 +150,29 @@ bar() {
             ch=${WORKSPACES:i:1}
 
             # Every 11 colons will contain our workspace number.
-            # When we find it, simply append it to our output.
+            # When we find it, we store it in a temporary var (CURRENTWS), and only add it to our output after we find the next workspace
+            #   Here is a quick trace to help clear things up:
+            #   1) Find workspace [1]           CURRENTWS: 1                 OUTPUT: (null)
+            #   2) Find that it is inactive     CURRENTWS: 1                 OUTPUT: (null) 
+            #   3) Find workspace [2]           CURRENTWS: 2                 OUTPUT: 1
+            #   4) Find that it is active       CURRENTWS: 2 WINDOWTITLE     OUTPUT: 1
+            #   5) Find workspace [3]           CURRENTWS: 3                 OUTPUT: 1, 2 WINDOWTITLE
+
             if [ $ch == ":" ]; then
                 COUNTER=$[$COUNTER +1]
                 if [ $COUNTER -eq 1 ]; then
                     j=$[$i +1]
                     if [ -n "$CURRENTWS" ]; then
-                        OUTPUT="$OUTPUT$IWorkspaceDivider $CURRENTWS "
+                        OUTPUT="$OUTPUT$IWorkspaceDivider$CURRENTWS%{A}"
                     fi
 
                     # Need to add two chars if the workspace is two digits
                     if [ ${WORKSPACES:i+2:1} != "," ]; then
-                        CURRENTWS="${WORKSPACES:i+1:1}${WORKSPACES:i+2:1}"
+                        # We are able to click on each workspace number to switch to it!
+                        #  e.g. The command "i3-msg workspace 3" switches to workspace 3
+                        CURRENTWS="%{A:i3-msg workspace ${WORKSPACES:i+1:1}${WORKSPACES:i+2:1}:}  ${WORKSPACES:i+1:1}${WORKSPACES:i+2:1}  "
                     else
-                        CURRENTWS="${WORKSPACES:i+1:1}"
+                        CURRENTWS="%{A:i3-msg workspace ${WORKSPACES:i+1:1}:}  ${WORKSPACES:i+1:1}  "
                     fi
                 fi
                 # Reset our counter when it hits 11
@@ -179,14 +192,17 @@ bar() {
                 if [ ${#ACTIVEW} -gt 0 ]; then
                     ACTIVEW=" $ACTIVEW"
                 fi
-                CURRENTWS="%{B#607D8B}[$CURRENTWS]$ACTIVEW%{B$bg}"
+                # Remove all spaces from the workspace number
+                CURRENTWS="$(echo -e "${CURRENTWS}" | tr -d '[[:space:]]')"
+                # Update the workspace with a different bg colour + title of active window
+                CURRENTWS="%{B#607D8B} [ $CURRENTWS ]$ACTIVEW %{B$bg}"
             fi
         done
 
-        # TODO: Better way to explain this
-        # If our current workspace still contains something
+        # If our current workspace var still contains something
+        #  - Happens when we reach the end of the loop before adding the last element (which happens at the beginning of the loop)
         if [ -n "$CURRENTWS" ]; then
-            OUTPUT="$OUTPUT$IWorkspaceDivider $CURRENTWS "
+            OUTPUT="$OUTPUT$IWorkspaceDivider$CURRENTWS%{A}"
         fi
 
         echo "%{F$gray}$OUTPUT$IWorkspaceDivider%{F-}"
