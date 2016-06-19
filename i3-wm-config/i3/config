@@ -75,7 +75,7 @@ bindsym $mod+Return exec termite -e fish
 bindsym $mod+Shift+q kill
 
 # start rofi (a program launcher)
-bindsym $mod+d exec rofi -show run -location 2 -font "Roboto 17" -fg "#C6C9CA" -bg "#002B36" -hlbg "#607D8B"
+bindsym $mod+d exec rofi -show run -location 2
 
 # change focus
 bindsym $mod+h focus left

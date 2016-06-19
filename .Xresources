@@ -1,0 +1,13 @@
+/* Rofi */
+#define r_bg   #002B36
+#define r_fg   #C6C9CA
+#define r_hlbg #607D8B
+
+rofi.color-enabled: true
+! background, foreground, background alt, highlight background, highlight foreground
+rofi.color-normal: r_bg, r_fg, r_bg, r_hlbg, #FFFFFF
+! background, border
+rofi.color-window: r_bg, #C6C9CA 
+
+rofi.location: 2
+rofi.font: Roboto 18
