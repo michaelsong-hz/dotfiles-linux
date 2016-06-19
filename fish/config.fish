@@ -9,4 +9,4 @@ set -q XDG_DATA_HOME
 # Load oh-my-fish configuration.
 source $OMF_PATH/init.fish
 
-set -g theme_color_scheme solarized 
+set -g theme_color_scheme dark
