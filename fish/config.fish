@@ -10,3 +10,5 @@ set -q XDG_DATA_HOME
 source $OMF_PATH/init.fish
 
 set -g theme_color_scheme dark
+
+fish_vi_key_bindings
