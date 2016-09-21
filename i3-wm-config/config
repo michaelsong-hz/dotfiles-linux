@@ -1,13 +1,11 @@
 # i3 config file (v4)
-#
-# Modified by Michael Song
 
 # Sets the mod key to the windows key
 set $mod Mod4
 
-# -----ADDITIONAL STUFF BY MICHAEL-----
+# -----ADDITIONAL STUFF-----
 # Removes title bars
-new_window 1pixel
+new_window pixel 1
 
 # Starts composite manager
 exec --no-startup-id compton 
@@ -59,7 +57,7 @@ for_window [class="Wine"] border normal
 
 # Starts lemonbar
 exec --no-startup-id $HOME/.config/lemonbar/lbar.sh
-# -----END MICHAEL'S STUFF-----
+# -----END ADDITIONAL STUFF-----
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -69,13 +67,13 @@ font pango:roboto regular 14
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec termite -e fish
+bindsym $mod+Return exec xfce4-terminal
 
 # kill focused window
 bindsym $mod+Shift+q kill
 
 # start rofi (a program launcher)
-bindsym $mod+d exec rofi -show run -location 2
+bindsym $mod+d exec dmenu_run
 
 # change focus
 bindsym $mod+h focus left
@@ -90,10 +88,10 @@ bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
 # move focused window
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+semicolon move right
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
@@ -183,3 +181,27 @@ mode "resize" {
 }
 
 bindsym $mod+r mode "resize"
+
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+bar {
+    font pango:Source Sans Pro-10 11
+        tray_output primary
+        status_command i3blocks
+        position top
+        colors {
+            separator           #268bd2
+            background          #002b36
+            statusline          #839496
+            focused_workspace   #4CAF50 #2196F3 #fdf6e3
+            active_workspace    #4CAF50 #2196F3 #fdf6e3
+            inactive_workspace  #002b36 #586e75 #002b36
+            urgent_workspace    #F44336 #F44336 #fdf6e3
+        }
+}
+
+#class                  #border backgr. text    indicator child_border
+client.focused          #4CAF50 #4CAF50 #fdf6e3 #4CAF50
+client.focused_inactive #2196F3 #2196F3 #eee8d5 #2196F3
+client.unfocused        #2196F3 #2196F3 #93a1a1 #2196F3
+client.urgent           #F44336 #F44336 #fdf6e3 #dc322f
