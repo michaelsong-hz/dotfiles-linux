@@ -1,0 +1,59 @@
+"Enable copy/pasting using the xterm clipboard
+set clipboard=unnamedplus
+
+"Line numbers
+set number
+
+set history=1000
+
+"Command line completion
+set wildmenu
+
+"Highlight search patten matches
+set hlsearch
+
+"Switching between tabs using Ctrl + h/l
+nnoremap <C-h> :tabprevious<CR>
+nnoremap <C-l> :tabnext<CR>
+
+"Enable folding
+set foldmethod=indent
+set foldlevel=99
+
+"Pathogen
+execute pathogen#infect()
+syntax on
+filetype plugin indent on
+
+"NERDTree map
+map <C-o> :NERDTreeToggle<CR>
+
+"YCM autocomplete (C++, Python)
+let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
+let g:ycm_python_binary_path = '/usr/bin/python3'
+
+"Highlights trailing whitespace with ·
+set list listchars=trail:·
+
+"Allows :make to compile C++, binds to F4
+au FileType cpp set makeprg=g++\ %
+nnoremap <F4> :w <bar> :!make<cr>
+"Runs program "a.out" by default
+nnoremap <F5> :!./a.out<cr>
+nnoremap <S-F5> :w <bar> :!make <bar> :!./a.out<cr>
+"Brings up youcompleteme debugger
+nnoremap <F6> :YcmDiags<cr>
+nnoremap <S-F6> :YcmCompleter FixIt <bar> :YcmDiags<cr>
+
+highlight YcmErrorLine guibg=#FFC107
+
+set tabstop=4       " The width of a TAB is set to 4.
+                    " Still it is a \t. It is just that
+                    " Vim will interpret it to be having
+                    " a width of 4.
+
+set shiftwidth=4    " Indents will have a width of 4
+
+set softtabstop=4   " Sets the number of columns for a TAB
+
+set expandtab       " Expand TABs to spaces
