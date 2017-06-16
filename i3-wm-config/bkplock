@@ -1,0 +1,5 @@
+#!/bin/bash
+
+scrot /tmp/screenshot.png
+ffmpeg -loglevel quiet -y -i /tmp/screenshot.png -vf "gblur=sigma=8" /tmp/screenshotblur.png
+i3lock -i /tmp/screenshotblur.png
